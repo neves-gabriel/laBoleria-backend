@@ -1,4 +1,3 @@
-import Joi from "joi";
 import urlSchema from "../schemas/urlSchema.js";
 import { connection } from "../database.js";
 

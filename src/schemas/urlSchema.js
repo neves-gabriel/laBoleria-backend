@@ -1,7 +1,7 @@
-import joi from "joi";
+import Joi from "joi";
 
-const urlSchema = joi.object({
-  image: joi.string().uri().required(),
+const urlSchema = Joi.object({
+  image: Joi.string().uri().required(),
 });
 
 export default urlSchema;
