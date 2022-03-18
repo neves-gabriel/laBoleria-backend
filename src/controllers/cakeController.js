@@ -1,5 +1,4 @@
-import bcrypt from "bcrypt";
-import joi from "joi";
+import Joi from "joi";
 import { connection } from "../database.js";
 
 export async function postCake(req, res) {
@@ -14,7 +13,12 @@ export async function postCake(req, res) {
       return res.sendStatus(409);
     }
 
-    const { error } = joi.validate(image, joi.string().uri().required());
+    const { error } = Joi.validate(
+      image,
+      Joi.object({
+        image: Joi.string().uri().required(),
+      })
+    );
     if (error) {
       return res.sendStatus(422);
     }
