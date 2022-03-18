@@ -19,9 +19,8 @@ export async function postCake(req, res) {
     }
 
     await connection.query(
-      "INSERT INTO cakes (name, price, description, image) VALUES ($1, $2, $3)"[
-        (name, price, description, image)
-      ]
+      "INSERT INTO cakes (name, price, description, image) VALUES ($1, $2, $3, $4)",
+      [name, price, description, image]
     );
 
     res.sendStatus(201);
