@@ -1,4 +1,5 @@
 import Joi from "joi";
+import urlSchema from "../schemas/urlSchema.js";
 import { connection } from "../database.js";
 
 export async function postCake(req, res) {
@@ -13,13 +14,8 @@ export async function postCake(req, res) {
       return res.sendStatus(409);
     }
 
-    const { error } = Joi.validate(
-      image,
-      Joi.object({
-        image: Joi.string().uri().required(),
-      })
-    );
-    if (error) {
+    const validation = urlSchema.validate(image);
+    if (validation.error) {
       return res.sendStatus(422);
     }
 
