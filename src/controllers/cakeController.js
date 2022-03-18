@@ -13,9 +13,9 @@ export async function postCake(req, res) {
       return res.sendStatus(409);
     }
 
-    const validation = urlSchema.validate(image);
+    const validation = urlSchema.validate({ image });
     if (validation.error) {
-      return res.sendStatus(422);
+      return res.status(422).send(validation.error.details[0].message);
     }
 
     await connection.query(
