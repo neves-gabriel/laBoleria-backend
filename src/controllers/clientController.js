@@ -1,12 +1,12 @@
 import { connection } from "../database.js";
 
 export async function postClient(req, res) {
-  const { name, adress, phone } = req.body;
+  const { name, address, phone } = req.body;
 
   try {
     await connection.query(
       "INSERT INTO clients (name, adress, phone) VALUES ($1, $2, $3)",
-      [name, adress, phone]
+      [name, address, phone]
     );
 
     res.sendStatus(201);
