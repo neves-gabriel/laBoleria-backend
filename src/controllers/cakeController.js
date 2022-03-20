@@ -38,7 +38,7 @@ export async function getCakes(req, res) {
       return res.sendStatus(204);
     }
 
-    res.status(200).send(cakes.rows[0]);
+    res.status(200).send(cakes.rows);
   } catch (error) {
     res.sendStatus(500);
   }
