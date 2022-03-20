@@ -9,7 +9,7 @@ CREATE TABLE cakes (
 CREATE TABLE clients (
 	id SERIAL PRIMARY KEY,
 	name varchar(255) NOT NULL,
-	addres varchar(255) NOT NULL,
+	address varchar(255) NOT NULL,
 	phone varchar(11) NOT NULL
 );
 

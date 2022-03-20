@@ -5,7 +5,7 @@ export async function postClient(req, res) {
 
   try {
     await connection.query(
-      "INSERT INTO clients (name, adress, phone) VALUES ($1, $2, $3)",
+      "INSERT INTO clients (name, address, phone) VALUES ($1, $2, $3)",
       [name, address, phone]
     );
 
