@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import idSchema from "../schemas/idSchema.js";
 import { connection } from "../database.js";
 
 export async function postOrder(req, res) {
@@ -38,25 +39,27 @@ export async function postOrder(req, res) {
 }
 
 export async function getOrders(req, res) {
+  const { id } = req.params;
   const { date } = req.query;
   const params = [];
 
   let query = `
-    SELECT clients.id AS "clientId", 
-    clients.name AS "clientName", 
-    address, 
-    phone, 
-    cakes.id AS "cakeId", 
-    cakes.name AS "cakeName", 
-    price, 
-    description, 
-    image, 
-    "createdAt", 
-    quantity, 
-    "totalPrice" 
-  FROM orders 
-    JOIN clients ON orders."clientId" = clients.id 
-    JOIN cakes ON orders."cakeId" = cakes.id
+    SELECT 
+      clients.id AS "clientId", 
+      clients.name AS "clientName", 
+      address, 
+      phone, 
+      cakes.id AS "cakeId", 
+      cakes.name AS "cakeName", 
+      price, 
+      description, 
+      image, 
+      "createdAt", 
+      quantity, 
+      "totalPrice" 
+    FROM orders 
+      JOIN clients ON orders."clientId" = clients.id 
+      JOIN cakes ON orders."cakeId" = cakes.id
   `;
 
   if (date) {
@@ -70,6 +73,91 @@ export async function getOrders(req, res) {
     if (!orders.rowCount) {
       return res.sendStatus(404);
     }
+
+    res.status(200).send(
+      orders.rows.map(
+        ({
+          clientId,
+          clientName,
+          address,
+          phone,
+          cakeId,
+          cakeName,
+          price,
+          description,
+          image,
+          createdAt,
+          quantity,
+          totalPrice,
+        }) => ({
+          client: {
+            id: clientId,
+            name: clientName,
+            address: address,
+            phone: phone,
+          },
+          cake: {
+            id: cakeId,
+            name: cakeName,
+            price: price,
+            description: description,
+            image: image,
+          },
+          createdAt: createdAt,
+          quantity: quantity,
+          totalPrice: totalPrice,
+        })
+      )
+    );
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+}
+
+export async function getOrderById(req, res) {
+  const { id } = req.params;
+  console.log(id);
+
+  const validateOrderId = await connection.query(
+    "SELECT * FROM orders WHERE id = $1",
+    [id]
+  );
+  if (validateOrderId.rowCount <= 0) {
+    return res.sendStatus(404);
+  }
+
+  const validation = idSchema.validate({ id });
+  if (validation.error) {
+    return res.status(400).send(validation.error.details[0].message);
+  }
+
+  let query = `
+    SELECT 
+      orders.id AS "orderId",
+      clients.id AS "clientId", 
+      clients.name AS "clientName", 
+      address, 
+      phone, 
+      cakes.id AS "cakeId", 
+      cakes.name AS "cakeName", 
+      price, 
+      description, 
+      image, 
+      "createdAt", 
+      quantity, 
+      "totalPrice" 
+    FROM orders 
+      JOIN clients ON orders."clientId" = clients.id 
+      JOIN cakes ON orders."cakeId" = cakes.id
+  `;
+
+  if (id) {
+    query += "WHERE orders.id = $1";
+  }
+
+  try {
+    const orders = await connection.query(`${query};`, [id]);
 
     res.status(200).send(
       orders.rows.map(
