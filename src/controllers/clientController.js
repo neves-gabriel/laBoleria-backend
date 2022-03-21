@@ -48,7 +48,8 @@ export async function getOrdersByClientId(req, res) {
       flavors.name AS "cakeFlavor",
       "createdAt", 
       quantity, 
-      "totalPrice" 
+      "totalPrice",
+      "isDelivered"
     FROM orders
       JOIN cakes ON orders."cakeId" = cakes.id
       JOIN flavors ON cakes."flavorId" = flavors.id
@@ -70,6 +71,7 @@ export async function getOrdersByClientId(req, res) {
           quantity,
           totalPrice,
           cakeFlavor,
+          isDelivered,
         }) => ({
           orderId: orderId,
           createdAt: createdAt,
@@ -77,6 +79,7 @@ export async function getOrdersByClientId(req, res) {
           totalPrice: totalPrice,
           cakeName: cakeName,
           cakeFlavor: cakeFlavor,
+          isDelivered: isDelivered,
         })
       )
     );

@@ -56,7 +56,8 @@ export async function getOrders(req, res) {
       image, 
       "createdAt", 
       quantity, 
-      "totalPrice" 
+      "totalPrice",
+      "isDelivered"
     FROM orders 
       JOIN clients ON orders."clientId" = clients.id 
       JOIN cakes ON orders."cakeId" = cakes.id
@@ -91,6 +92,7 @@ export async function getOrders(req, res) {
           createdAt,
           quantity,
           totalPrice,
+          isDelivered,
         }) => ({
           client: {
             id: clientId,
@@ -109,6 +111,7 @@ export async function getOrders(req, res) {
           createdAt: createdAt,
           quantity: quantity,
           totalPrice: totalPrice,
+          isDelivered: isDelivered,
         })
       )
     );
@@ -149,7 +152,8 @@ export async function getOrderById(req, res) {
       image, 
       "createdAt", 
       quantity, 
-      "totalPrice" 
+      "totalPrice",
+      "isDelivered"
     FROM orders 
       JOIN clients ON orders."clientId" = clients.id 
       JOIN cakes ON orders."cakeId" = cakes.id
@@ -179,6 +183,7 @@ export async function getOrderById(req, res) {
           createdAt,
           quantity,
           totalPrice,
+          isDelivered,
         }) => ({
           client: {
             id: clientId,
@@ -197,9 +202,47 @@ export async function getOrderById(req, res) {
           createdAt: createdAt,
           quantity: quantity,
           totalPrice: totalPrice,
+          isDelivered: isDelivered,
         })
       )
     );
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+}
+
+export async function patchOrder(req, res) {
+  const { id } = req.params;
+
+  const validateOrderId = await connection.query(
+    "SELECT * FROM orders WHERE id = $1",
+    [id]
+  );
+  if (validateOrderId.rowCount <= 0) {
+    return res.sendStatus(404);
+  }
+
+  const validation = idSchema.validate({ id });
+  if (validation.error) {
+    return res.status(400).send(validation.error.details[0].message);
+  }
+
+  let query = `
+    UPDATE 
+      orders
+    SET
+      "isDelivered" = true
+  `;
+
+  if (id) {
+    query += "WHERE orders.id = $1";
+  }
+
+  try {
+    await connection.query(`${query};`, [id]);
+
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
     return res.sendStatus(500);

@@ -25,5 +25,6 @@ CREATE TABLE orders (
 	"cakeId" INTEGER NOT NULL REFERENCES cakes(id),
 	quantity INTEGER  NOT NULL,
 	"createdAt" TIMESTAMP NOT NULL,
-	"totalPrice" INTEGER NOT NULL
+	"totalPrice" INTEGER NOT NULL,
+	"isDelivered" BOOLEAN NOT NULL DEFAULT FALSE;
 );
