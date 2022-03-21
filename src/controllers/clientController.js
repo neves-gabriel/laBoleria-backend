@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { connection } from "../database.js";
 
 export async function postClient(req, res) {
@@ -74,7 +75,7 @@ export async function getOrdersByClientId(req, res) {
           isDelivered,
         }) => ({
           orderId: orderId,
-          createdAt: createdAt,
+          createdAt: dayjs(createdAt).format("YYYY-MM-DD HH:mm"),
           quantity: quantity,
           totalPrice: totalPrice,
           cakeName: cakeName,
