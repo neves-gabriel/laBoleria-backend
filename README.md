@@ -75,6 +75,9 @@ The following tools were used in the construction of the project:
 -   **[CORS](https://expressjs.com/en/resources/middleware/cors.html)**
 -   **[dotENV](https://github.com/motdotla/dotenv)**
 -   **[Joi](https://github.com/hapijs/joi)**
+-   **[bcrypt](https://github.com/kelektiv/node.bcrypt.js)**
+-   **[Day.js](https://github.com/iamkun/dayjs)**
+-   **[PostgreSQL client for node.js](https://github.com/brianc/node-postgres)**
 
 > See the file  [package.json](https://github.com/neves-gabriel/laBoleria-backend/blob/main/package.json)
 
