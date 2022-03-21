@@ -34,7 +34,7 @@ laBoleria is a backend project made with NodeJS that manages the clients, cakes(
 ---
 ## How it works
 
-This project is a Backend project (server folder)
+This project is a Backend project.
 
 ### Pre-requisites
 
@@ -47,21 +47,18 @@ In addition, it is good to have an editor to work with the code like [VSCode] (h
 ```bash
 
 # Clone this repository
-$ git clone git@github.com:tgmarinho/README-ecoleta.git
+$ git clone git@github.com:neves-gabriel/laBoleria-backend.git
 
 # Access the project folder cmd/terminal
-$ cd README-ecoleta
-
-# go to the server folder
-$ cd server
+$ cd laBoleria-backend
 
 # install the dependencies
 $ npm install
 
 # Run the application in development mode
-$ npm run dev:server
+$ npm run dev
 
-# The server will start at port: 3333 - go to http://localhost:3333
+# The server will start at port: 5000 - go to http://localhost:5000
 
 ```
 ---
