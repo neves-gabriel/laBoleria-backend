@@ -40,7 +40,18 @@ export async function postCake(req, res) {
 
 export async function getCakes(req, res) {
   try {
-    const cakes = await connection.query("SELECT * FROM cakes");
+    let query = `
+    SELECT 
+      cakes.name, 
+      price, 
+      description, 
+      image,
+      flavors.name AS "cakeFlavor"
+    FROM cakes
+      JOIN flavors ON cakes."flavorId" = flavors.id
+    `;
+
+    const cakes = await connection.query(`${query};`);
 
     if (!cakes.rowCount) {
       return res.sendStatus(204);
@@ -48,6 +59,7 @@ export async function getCakes(req, res) {
 
     res.status(200).send(cakes.rows);
   } catch (error) {
-    res.sendStatus(500);
+    console.log(error);
+    return res.sendStatus(500);
   }
 }
