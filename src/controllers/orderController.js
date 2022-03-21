@@ -39,7 +39,6 @@ export async function postOrder(req, res) {
 }
 
 export async function getOrders(req, res) {
-  const { id } = req.params;
   const { date } = req.query;
   const params = [];
 
@@ -117,7 +116,6 @@ export async function getOrders(req, res) {
 
 export async function getOrderById(req, res) {
   const { id } = req.params;
-  console.log(id);
 
   const validateOrderId = await connection.query(
     "SELECT * FROM orders WHERE id = $1",

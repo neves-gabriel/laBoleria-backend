@@ -29,3 +29,49 @@ export async function getClients(req, res) {
     res.sendStatus(500);
   }
 }
+
+export async function getOrdersByClientId(req, res) {
+  const { id } = req.params;
+
+  const validateClientId = await connection.query(
+    "SELECT * FROM clients WHERE id = $1",
+    [id]
+  );
+  if (validateClientId.rowCount <= 0) {
+    return res.sendStatus(404);
+  }
+
+  let query = `
+    SELECT 
+      orders.id AS "orderId",
+      cakes.name AS "cakeName",
+      "createdAt", 
+      quantity, 
+      "totalPrice" 
+    FROM orders
+      JOIN cakes ON orders."cakeId" = cakes.id
+  `;
+
+  if (id) {
+    query += 'WHERE orders."clientId" = $1';
+  }
+
+  try {
+    const orders = await connection.query(`${query};`, [id]);
+
+    res.status(200).send(
+      orders.rows.map(
+        ({ orderId, cakeName, createdAt, quantity, totalPrice }) => ({
+          orderId: orderId,
+          createdAt: createdAt,
+          quantity: quantity,
+          totalPrice: totalPrice,
+          cakeName: cakeName,
+        })
+      )
+    );
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+}

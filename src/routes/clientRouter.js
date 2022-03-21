@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { postClient, getClients } from "../controllers/clientController.js";
+import {
+  postClient,
+  getClients,
+  getOrdersByClientId,
+} from "../controllers/clientController.js";
 import { validateSchemaMiddleware } from "../middlewares/validateSchemaMiddleware.js";
 import clientSchema from "../schemas/clientSchema.js";
 
@@ -10,4 +14,5 @@ clientRouter.post(
   postClient
 );
 clientRouter.get("/clients", getClients);
+clientRouter.get("/clients/:id/orders", getOrdersByClientId);
 export default clientRouter;
