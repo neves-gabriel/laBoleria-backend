@@ -3,7 +3,8 @@ CREATE TABLE cakes (
 	name varchar(255) NOT NULL UNIQUE,
 	price numeric(255) NOT NULL,
 	image varchar(255) NOT NULL,
-	description TEXT
+	description TEXT,
+	"flavorId" INTEGER REFERENCES flavors(id)
 );
 
 CREATE TABLE clients (
@@ -20,4 +21,9 @@ CREATE TABLE orders (
 	quantity INTEGER  NOT NULL,
 	"createdAt" varchar(255) NOT NULL,
 	"totalPrice" INTEGER NOT NULL
+);
+
+CREATE TABLE flavors (
+	id SERIAL PRIMARY KEY,
+	name varchar(255) NOT NULL UNIQUE
 );
