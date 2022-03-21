@@ -38,15 +38,76 @@ export async function postOrder(req, res) {
 }
 
 export async function getOrders(req, res) {
+  const { date } = req.query;
+  const params = [];
+
+  let query = `
+    SELECT clients.id AS "clientId", 
+    clients.name AS "clientName", 
+    address, 
+    phone, 
+    cakes.id AS "cakeId", 
+    cakes.name AS "cakeName", 
+    price, 
+    description, 
+    image, 
+    "createdAt", 
+    quantity, 
+    "totalPrice" 
+  FROM orders 
+    JOIN clients ON orders."clientId" = clients.id 
+    JOIN cakes ON orders."cakeId" = cakes.id
+  `;
+
+  if (date) {
+    query += 'WHERE "createdAt" ILIKE $1';
+    params.push(`%${date}%`);
+  }
+
   try {
-    const orders = await connection.query("SELECT * FROM orders");
+    const orders = await connection.query(`${query};`, params);
 
     if (!orders.rowCount) {
-      return res.sendStatus(204);
+      return res.sendStatus(404);
     }
 
-    res.status(200).send(orders.rows);
+    res.status(200).send(
+      orders.rows.map(
+        ({
+          clientId,
+          clientName,
+          address,
+          phone,
+          cakeId,
+          cakeName,
+          price,
+          description,
+          image,
+          createdAt,
+          quantity,
+          totalPrice,
+        }) => ({
+          client: {
+            id: clientId,
+            name: clientName,
+            address: address,
+            phone: phone,
+          },
+          cake: {
+            id: cakeId,
+            name: cakeName,
+            price: price,
+            description: description,
+            image: image,
+          },
+          createdAt: createdAt,
+          quantity: quantity,
+          totalPrice: totalPrice,
+        })
+      )
+    );
   } catch (error) {
-    res.sendStatus(500);
+    console.log(error);
+    return res.sendStatus(500);
   }
 }
