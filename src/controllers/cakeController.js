@@ -41,14 +41,14 @@ export async function postCake(req, res) {
 export async function getCakes(req, res) {
   try {
     let query = `
-    SELECT 
-      cakes.name, 
-      price, 
-      description, 
-      image,
-      flavors.name AS "cakeFlavor"
-    FROM cakes
-      JOIN flavors ON cakes."flavorId" = flavors.id
+      SELECT 
+        cakes.name, 
+        price, 
+        description, 
+        image,
+        flavors.name AS "cakeFlavor"
+      FROM cakes
+        JOIN flavors ON cakes."flavorId" = flavors.id
     `;
 
     const cakes = await connection.query(`${query};`);
