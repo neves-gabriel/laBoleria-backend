@@ -69,14 +69,14 @@ $ npm run dev:server
 
 The following tools were used in the construction of the project:
 
-#### [](https://github.com/tgmarinho/Ecoleta#server-nodejs--typescript)**Server**  ([NodeJS](https://nodejs.org/en/))
+#### [](https://github.com/neves-gabriel/laBoleria-backend)**Server**  ([NodeJS](https://nodejs.org/en/))
 
 -   **[Express](https://expressjs.com/)**
 -   **[CORS](https://expressjs.com/en/resources/middleware/cors.html)**
 -   **[dotENV](https://github.com/motdotla/dotenv)**
 -   **[Joi](https://github.com/hapijs/joi)**
 
-> See the file  [package.json](https://github.com/tgmarinho/README-ecoleta/blob/master/server/package.json)
+> See the file  [package.json](https://github.com/neves-gabriel/laBoleria-backend/package.json)
 
 ---
 ## Author
