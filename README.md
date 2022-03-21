@@ -87,6 +87,6 @@ The following tools were used in the construction of the project:
  <sub><b>Gabriel Neves</b></sub></a> <a href="https://www.linkedin.com/in/gabriel-rodrigues-neves/" title="LinkedIn"></a>
  <br />
  
-[![Gmail Badge](https://img.shields.io/badge/-tgmarinho@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:gabrielrn.mobres@gmail.com)](mailto:gabrielrn.mobres@gmail.com)
+[![Gmail Badge](https://img.shields.io/badge/-gabrielrn.mobres@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:gabrielrn.mobres@gmail.com)](mailto:gabrielrn.mobres@gmail.com)
 
 ---
