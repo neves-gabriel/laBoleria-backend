@@ -64,7 +64,7 @@ export async function getOrders(req, res) {
   `;
 
   if (date) {
-    query += 'WHERE "createdAt" ILIKE $1';
+    query += 'WHERE "createdAt"::date = $1';
     params.push(`%${date}%`);
   }
 
