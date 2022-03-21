@@ -49,7 +49,8 @@ export async function getOrders(req, res) {
       address, 
       phone, 
       cakes.id AS "cakeId", 
-      cakes.name AS "cakeName", 
+      cakes.name AS "cakeName",
+      flavors.name AS "cakeFlavor",
       price, 
       description, 
       image, 
@@ -59,6 +60,7 @@ export async function getOrders(req, res) {
     FROM orders 
       JOIN clients ON orders."clientId" = clients.id 
       JOIN cakes ON orders."cakeId" = cakes.id
+      JOIN flavors ON cakes."flavorId" = flavors.id
   `;
 
   if (date) {
@@ -82,6 +84,7 @@ export async function getOrders(req, res) {
           phone,
           cakeId,
           cakeName,
+          cakeFlavor,
           price,
           description,
           image,
@@ -101,6 +104,7 @@ export async function getOrders(req, res) {
             price: price,
             description: description,
             image: image,
+            cakeFlavor: cakeFlavor,
           },
           createdAt: createdAt,
           quantity: quantity,
@@ -138,7 +142,8 @@ export async function getOrderById(req, res) {
       address, 
       phone, 
       cakes.id AS "cakeId", 
-      cakes.name AS "cakeName", 
+      cakes.name AS "cakeName",
+      flavors.name AS "cakeFlavor", 
       price, 
       description, 
       image, 
@@ -148,6 +153,7 @@ export async function getOrderById(req, res) {
     FROM orders 
       JOIN clients ON orders."clientId" = clients.id 
       JOIN cakes ON orders."cakeId" = cakes.id
+      JOIN flavors ON cakes."flavorId" = flavors.id
   `;
 
   if (id) {
@@ -166,6 +172,7 @@ export async function getOrderById(req, res) {
           phone,
           cakeId,
           cakeName,
+          cakeFlavor,
           price,
           description,
           image,
@@ -185,6 +192,7 @@ export async function getOrderById(req, res) {
             price: price,
             description: description,
             image: image,
+            cakeFlavor: cakeFlavor,
           },
           createdAt: createdAt,
           quantity: quantity,

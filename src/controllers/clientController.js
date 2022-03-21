@@ -45,11 +45,13 @@ export async function getOrdersByClientId(req, res) {
     SELECT 
       orders.id AS "orderId",
       cakes.name AS "cakeName",
+      flavors.name AS "cakeFlavor",
       "createdAt", 
       quantity, 
       "totalPrice" 
     FROM orders
       JOIN cakes ON orders."cakeId" = cakes.id
+      JOIN flavors ON cakes."flavorId" = flavors.id
   `;
 
   if (id) {
@@ -61,12 +63,20 @@ export async function getOrdersByClientId(req, res) {
 
     res.status(200).send(
       orders.rows.map(
-        ({ orderId, cakeName, createdAt, quantity, totalPrice }) => ({
+        ({
+          orderId,
+          cakeName,
+          createdAt,
+          quantity,
+          totalPrice,
+          cakeFlavor,
+        }) => ({
           orderId: orderId,
           createdAt: createdAt,
           quantity: quantity,
           totalPrice: totalPrice,
           cakeName: cakeName,
+          cakeFlavor: cakeFlavor,
         })
       )
     );
