@@ -76,7 +76,7 @@ The following tools were used in the construction of the project:
 -   **[dotENV](https://github.com/motdotla/dotenv)**
 -   **[Joi](https://github.com/hapijs/joi)**
 
-> See the file  [package.json](https://github.com/neves-gabriel/laBoleria-backend/package.json)
+> See the file  [package.json](https://github.com/neves-gabriel/laBoleria-backend/blob/main/package.json)
 
 ---
 ## Author
