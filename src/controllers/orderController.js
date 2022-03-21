@@ -21,12 +21,12 @@ export async function postOrder(req, res) {
       return res.sendStatus(404);
     }
 
-    const totalPrice = quantity * validateCakeId[0].price;
+    const totalPrice = Number.parseInt(quantity * validateCakeId.rows[0].price);
 
     const createdAt = dayjs().format("YYYY-MM-DD HH:mm");
 
     await connection.query(
-      "INSERT INTO orders (clientId, cakeId, quantity, totalPrice, createdAt) VALUES ($1, $2, $3, $4, $5)",
+      'INSERT INTO orders ("clientId", "cakeId", quantity, "totalPrice", "createdAt") VALUES ($1, $2, $3, $4, $5)',
       [clientId, cakeId, quantity, totalPrice, createdAt]
     );
 
